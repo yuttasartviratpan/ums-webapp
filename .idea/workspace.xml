@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b533dbdc-fcb6-462a-b3c2-c7b3b94940e9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/servletWebapp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic/basic-webapp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jsp/jsp-webapp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/login-webapp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/login/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvc/mvc-webapp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvc/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mvc/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic/target/basic-webapp-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/basic/target/basic-webapp-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/basic/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic/target/repo/io/muzoo/ssc/webapp/basic-webapp/1.0-SNAPSHOT/basic-webapp-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/basic/target/repo/io/muzoo/ssc/webapp/basic-webapp/1.0-SNAPSHOT/basic-webapp-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/login-webapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/login/login-webapp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/src/main/java/io/muzoo/ssc/webapp/service/SecurityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/login/src/main/java/io/muzoo/ssc/webapp/service/SecurityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +38,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/jre/lib/ext/mysql-connector-java-8.0.28.jar" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -55,7 +54,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648214350926</updated>
-      <workItem from="1648214356495" duration="475000" />
+      <workItem from="1648214356495" duration="1565000" />
+      <workItem from="1648215972123" duration="177000" />
     </task>
     <servers />
   </component>
