@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="login-webapp" />
+        <module name="jsp-webapp" />
+        <module name="mvc-webapp" />
+        <module name="basic-webapp" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="basic-webapp" target="11" />
+      <module name="jsp-webapp" target="11" />
+      <module name="login-webapp" target="11" />
+      <module name="mvc-webapp" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
