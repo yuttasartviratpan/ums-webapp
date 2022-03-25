@@ -1,29 +1,59 @@
 package io.muzoo.ssc.webapp.service;
 
-public class UserService {
-    /*
-    public static void main(String[] args) {
-        String dbDriver = "com.mysql.cj.jdbc.Driver";
-        String dbURL = "jdbc:mysql:// localhost:13306/";
-        // Database name to access
-        String dbName = "login_webapp";
-        String dbUsername = "root";
-        String dbPassword = "securedpassword";
+import io.muzoo.ssc.webapp.model.User;
+import lombok.Setter;
+import org.mindrot.jbcrypt.BCrypt;
 
-        try(Connection con = DriverManager.getConnection(dbURL + dbName,
-                dbUsername,
-                dbPassword);){
-            String query = " INSERT INTO tbl_user(username, password, display_name)"
-                    + " VALUES (?, ?, ?)";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setString (1, "my_username");
-            preparedStmt.setString (2, "my_password");
-            preparedStmt.setString (3, "my_display_name");
+import java.sql.*;
+
+public class UserService {
+
+    private static final String INSERT_USER_SQL = "INSERT INTO tbl_user(username, password, display_name) VALUES (?, ?, ?);";
+    private static final String SELECT_USER_SQL = "SELECT * FROM tbl_user WHERE username = ?;";
+
+    @Setter
+    private DatabaseConnectionService databaseConnectionService;
+
+    public void createUser(String username, String password, String displayName) throws UserServiceException {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        try(Connection connection = databaseConnectionService.getConnection()){
+            PreparedStatement preparedStmt = connection.prepareStatement(INSERT_USER_SQL);
+            preparedStmt.setString (1, username);
+            preparedStmt.setString (2, hashedPassword);
+            preparedStmt.setString (3, displayName);
             preparedStmt.execute();
+            connection.commit();
         }
-        catch (SQLException e){
-            e.printStackTrace();
+        catch (SQLIntegrityConstraintViolationException e){
+            throw new UsernameNotUniqueException(String.format("Username %s has already been taken.", username));
+        }
+        catch (SQLException throwables){
+            throw new UserServiceException(throwables.getMessage());
         }
     }
-     */
+
+    public User findByUsername(String username){
+        try(Connection connection = databaseConnectionService.getConnection()){
+            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_USER_SQL);
+            preparedStmt.setString (1, username);
+            ResultSet result = preparedStmt.executeQuery();
+            result.next();
+            return new User(
+                    result.getLong("id"),
+                    result.getString("username"),
+                    result.getString("password"),
+                    result.getString("display_name")
+            );
+        }
+        catch (SQLException throwables){
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        UserService userService = new UserService();
+        userService.setDatabaseConnectionService(new DatabaseConnectionService());
+        User user = userService.findByUsername("domo");
+        System.out.println(user.getUsername());
+    }
 }
