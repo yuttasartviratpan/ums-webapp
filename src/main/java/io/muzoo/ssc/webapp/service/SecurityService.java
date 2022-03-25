@@ -5,16 +5,10 @@
  */
 package io.muzoo.ssc.webapp.service;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import io.muzoo.ssc.webapp.database.DatabaseConnection;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -22,48 +16,19 @@ import org.apache.commons.lang.StringUtils;
  * @author gigadot
  */
 public class SecurityService {
-    
+
+    private Map<String, String> userCredentials = new HashMap<String, String>() {{
+        put("admin", "123456");
+        put("muic", "1111");
+    }};
+
     public boolean isAuthorized(HttpServletRequest request) {
         String username = (String) request.getSession()
                 .getAttribute("username");
-
         // do checking
-
-       return (username != null && isUserInDB(username));
+        return (username != null && userCredentials.containsKey(username));
     }
 
-    private boolean isUserInDB(String username){
-        try (Connection con = new DatabaseConnection().initializeDatabase();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM hw4usercredentials " +
-                     "WHERE username = " + "'" + username + "'")){
-            if (rs.next()) {
-                return true;
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
-    public boolean authenticate(String username, String password, HttpServletRequest request) {
-        try (Connection con = new DatabaseConnection().initializeDatabase();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM hw4usercredentials " +
-                     "WHERE username = " + "'" + username + "'" + " AND password = " + "'" + password + "'")){
-            if (rs.next()) {
-                return true;
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-/*
     public boolean authenticate(String username, String password, HttpServletRequest request) {
         String passwordInDB = userCredentials.get(username);
         boolean isMatched = StringUtils.equals(password, passwordInDB);
@@ -74,10 +39,9 @@ public class SecurityService {
             return false;
         }
     }
-    
+
     public void logout(HttpServletRequest request) {
         request.getSession().invalidate();
     }
-   */
 
 }
