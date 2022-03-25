@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/jsp/jsp-webapp.iml" filepath="$PROJECT_DIR$/jsp/jsp-webapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login-webapp.iml" filepath="$PROJECT_DIR$/login/login-webapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvc/mvc-webapp.iml" filepath="$PROJECT_DIR$/mvc/mvc-webapp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/servletWebapp.iml" filepath="$PROJECT_DIR$/.idea/servletWebapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/webapp.iml" filepath="$PROJECT_DIR$/.idea/webapp.iml" />
     </modules>
   </component>
 </project>
