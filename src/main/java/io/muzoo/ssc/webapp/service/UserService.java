@@ -5,11 +5,14 @@ import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
 
     private static final String INSERT_USER_SQL = "INSERT INTO tbl_user(username, password, display_name) VALUES (?, ?, ?);";
     private static final String SELECT_USER_SQL = "SELECT * FROM tbl_user WHERE username = ?;";
+    private static final String SELECT_ALL_USER_SQL = "SELECT * FROM tbl_user;";
 
     @Setter
     private DatabaseConnectionService databaseConnectionService;
@@ -50,10 +53,34 @@ public class UserService {
         }
     }
 
+
+    public List<User> listAllUsers(){
+        List<User> userList = new ArrayList<>();
+        try(Connection connection = databaseConnectionService.getConnection()){
+            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_ALL_USER_SQL);
+            ResultSet result = preparedStmt.executeQuery();
+            while(result.next()){
+                userList.add(new User(
+                                result.getLong("id"),
+                                result.getString("username"),
+                                result.getString("password"),
+                                result.getString("display_name")
+                        )
+                );
+            }
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return userList;
+    }
+
     public static void main(String[] args) {
         UserService userService = new UserService();
         userService.setDatabaseConnectionService(new DatabaseConnectionService());
-        User user = userService.findByUsername("domo");
-        System.out.println(user.getUsername());
+        List<User> users = userService.listAllUsers();
+        for(User user : users){
+            System.out.println(user.getUsername());
+        }
     }
 }
