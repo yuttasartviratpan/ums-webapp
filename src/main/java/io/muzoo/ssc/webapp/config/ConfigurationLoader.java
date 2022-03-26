@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigurationLoader {
-
     public static ConfigProperties load(){
         String configFilename = "config.properties";
         try(FileInputStream fin = new FileInputStream(configFilename)){

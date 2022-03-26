@@ -26,8 +26,6 @@ public class LoginServlet extends HttpServlet implements Routable {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // do login post logic
-        // extract username and password from request
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)) {
@@ -45,11 +43,6 @@ public class LoginServlet extends HttpServlet implements Routable {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
             rd.include(request, response);
         }
-
-        // check username and password against database
-        // if valid then set username attribute to session via securityService
-        // else put error message to render error on the login form
-
     }
 
     @Override

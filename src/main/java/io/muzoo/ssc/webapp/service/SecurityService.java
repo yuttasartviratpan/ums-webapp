@@ -19,7 +19,6 @@ public class SecurityService {
     @Setter
     private UserService userService;
 
-
     public boolean isAuthorized(HttpServletRequest request) {
         String username = (String) request.getSession()
                 .getAttribute("username");

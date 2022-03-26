@@ -41,7 +41,6 @@ public class DeleteUserServlet extends HttpServlet implements Routable {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if (authorized) {
-            // do MVC in here
             String username = (String) request.getSession().getAttribute("username");
             UserService userService = UserService.getInstance();
             try{

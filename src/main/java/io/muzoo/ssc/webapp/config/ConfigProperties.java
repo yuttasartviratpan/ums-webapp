@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ConfigProperties {
-
     private String databaseDriverClassName;
     private String databaseConnectionUrl;
     private String databaseUsername;

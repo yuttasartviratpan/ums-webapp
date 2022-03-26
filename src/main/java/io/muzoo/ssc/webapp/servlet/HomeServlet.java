@@ -6,7 +6,6 @@
 package io.muzoo.ssc.webapp.servlet;
 
 import io.muzoo.ssc.webapp.Routable;
-import io.muzoo.ssc.webapp.model.User;
 import io.muzoo.ssc.webapp.service.SecurityService;
 import io.muzoo.ssc.webapp.service.UserService;
 

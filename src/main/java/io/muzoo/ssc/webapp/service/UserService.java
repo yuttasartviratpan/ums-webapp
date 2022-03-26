@@ -120,7 +120,6 @@ public class UserService {
         }
     }
 
-
     public void changePassword(String username, String password) throws UserServiceException {
         try(Connection connection = databaseConnectionService.getConnection();
             PreparedStatement preparedStmt = connection.prepareStatement(UPDATE_USER_PASSWORD_SQL)){
@@ -134,13 +133,4 @@ public class UserService {
         }
     }
 
-
-//    public static void main(String[] args) {
-//        UserService userService = new UserService();
-//        userService.setDatabaseConnectionService(new DatabaseConnectionService());
-//        List<User> users = userService.listAllUsers();
-//        for(User user : users){
-//            System.out.println(user.getUsername());
-//        }
-//    }
 }

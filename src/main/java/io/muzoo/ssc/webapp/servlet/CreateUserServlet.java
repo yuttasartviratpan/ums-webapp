@@ -34,8 +34,6 @@ public class CreateUserServlet extends HttpServlet implements Routable {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if (authorized) {
-
-
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/create.jsp");
             rd.include(request, response);
             request.getSession().removeAttribute("hasError");
@@ -51,7 +49,6 @@ public class CreateUserServlet extends HttpServlet implements Routable {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if (authorized) {
-
             String username = StringUtils.trim(request.getParameter("username"));
             String displayName = StringUtils.trim(request.getParameter("displayName"));
             String password = request.getParameter("password");
