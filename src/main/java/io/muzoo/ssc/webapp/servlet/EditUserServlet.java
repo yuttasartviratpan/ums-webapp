@@ -35,18 +35,19 @@ public class EditUserServlet extends HttpServlet implements Routable {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if (authorized) {
-
             String username = StringUtils.trim(request.getParameter("username"));
             UserService userService = UserService.getInstance();
-
-            //TODO: Handle NullPointer when user edit ?username={username} to be username that doesn't exist
-            //  in the database
             User user = userService.findByUsername(username);
-            request.setAttribute("user", user);
-            request.setAttribute("username", user.getUsername()); //NULL PTR HERE
-            request.setAttribute("displayName", user.getDisplayName());
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/edit.jsp");
-            rd.include(request, response);
+            if(user == null){
+                response.sendRedirect("/");
+            }
+            else{
+                request.setAttribute("user", user);
+                request.setAttribute("username", user.getUsername());
+                request.setAttribute("displayName", user.getDisplayName());
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+                rd.include(request, response);
+            }
 
             request.getSession().removeAttribute("hasError");
             request.getSession().removeAttribute("message");
