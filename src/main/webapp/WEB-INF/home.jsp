@@ -55,8 +55,35 @@
                 <td class="align-middle">
                     <button class="btn btn-warning btn-sm" type="button"><i class="fa fa-pencil-square"></i>Edit</button>
                     <c:if test="${currentUser.username != user.username}">
-                        <a class="btn btn-danger btn-sm" type="button" href="/user/delete?username=${user.username}">
-                            <i class="fa fa-trash"></i>Delete</a>
+                        <!-- Button trigger modal -->
+                        <button class="btn btn-danger btn-sm"
+                                type="button"
+                                href="/user/delete?username=${user.username}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#delete-modal-${user.id}"><i class="fa fa-trash"></i>Delete
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete-modal-${user.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel" style="color: black">Confirm deleting user</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a style="color: black">Do you wish to delete
+                                            <b>${user.displayName}</b> (<b>${user.username}</b>)?</a>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a class="btn btn-danger" href="/user/delete?username=${user.username}">
+                                            <i class="fa fa-trash"></i>&nbsp; Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </c:if>
                 </td>
             </tr>
