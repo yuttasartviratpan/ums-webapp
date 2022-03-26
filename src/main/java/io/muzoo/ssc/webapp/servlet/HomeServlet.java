@@ -44,15 +44,14 @@ public class HomeServlet extends HttpServlet implements Routable {
             // do MVC in here
             String username = (String) request.getSession().getAttribute("username");
             UserService userService = UserService.getInstance();
-            User currentUser = userService.findByUsername(username);
 
-            request.setAttribute("currentUser", currentUser);
+            request.setAttribute("currentUser", userService.findByUsername(username));
             request.setAttribute("users", userService.listAllUsers());
 
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/home.jsp");
             rd.include(request, response);
-            request.removeAttribute("hasError");
-            request.removeAttribute("message");
+            request.getSession().removeAttribute("hasError");
+            request.getSession().removeAttribute("message");
         } else {
             request.removeAttribute("hasError");
             request.removeAttribute("message");

@@ -45,7 +45,6 @@ public class DeleteUserServlet extends HttpServlet implements Routable {
             // do MVC in here
             String username = (String) request.getSession().getAttribute("username");
             UserService userService = UserService.getInstance();
-
             try{
                 User currentUser = userService.findByUsername(username);
                 User deletingUser = userService.findByUsername(request.getParameter("username"));
