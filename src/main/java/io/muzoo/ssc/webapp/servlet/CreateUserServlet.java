@@ -1,34 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package io.muzoo.ssc.webapp.servlet;
 
 import io.muzoo.ssc.webapp.Routable;
-import io.muzoo.ssc.webapp.model.User;
 import io.muzoo.ssc.webapp.service.SecurityService;
 import io.muzoo.ssc.webapp.service.UserService;
 
-import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-/**
- *
- * @author gigadot
- */
-public class HomeServlet extends HttpServlet implements Routable {
+public class CreateUserServlet extends HttpServlet implements Routable {
 
 
     private SecurityService securityService;
 
     @Override
     public String getMapping() {
-        return "/index.jsp";
+        return "/user/create";
     }
 
     @Override
@@ -44,10 +34,9 @@ public class HomeServlet extends HttpServlet implements Routable {
             String username = (String) request.getSession().getAttribute("username");
             UserService userService = UserService.getInstance();
 
-            request.setAttribute("currentUser", userService.findByUsername(username));
-            request.setAttribute("users", userService.listAllUsers());
+            request.setAttribute("user", userService.findByUsername(username));
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/create.jsp");
             rd.include(request, response);
             request.getSession().removeAttribute("hasError");
             request.getSession().removeAttribute("message");

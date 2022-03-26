@@ -26,7 +26,6 @@ public class DeleteUserServlet extends HttpServlet implements Routable {
 
 
     private SecurityService securityService;
-    private UserService userService;
 
     @Override
     public String getMapping() {
