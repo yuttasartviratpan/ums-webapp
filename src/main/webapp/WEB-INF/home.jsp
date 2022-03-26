@@ -38,9 +38,11 @@
                 <td class="py-2">${user.id}</td>
                 <td class="py-2">${user.username}</td>
                 <td class="py-2">${user.displayName}</td>
-                <td>
+                <td class="align-middle">
                     <button class="btn btn-warning btn-sm" type="button"><i class="fa fa-pencil-square"></i>Edit</button>
-                    <button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i>Delete</button>
+                    <c:if test="${currentUser.username != user.username}">
+                        <button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i>Delete</button>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
