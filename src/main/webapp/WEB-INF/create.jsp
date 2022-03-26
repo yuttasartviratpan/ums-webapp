@@ -12,11 +12,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
-<body style="background-color:darkblue">
+<body style="background-color:darkgray">
 <div class="container">
-    <nav class="navbar navbar-light bg-info">
+    <nav class="navbar navbar-light bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">SSC - Webapp</a>
+            <a class="navbar-brand" href="/" style="color: aliceblue">SSC - Webapp</a>
             <a class="btn btn-light btn-sm pull-right" type="button" href="/logout">
                 <i class="fa fa-sign-out"></i> &nbsp; Logout
             </a>
@@ -36,7 +36,45 @@
             </c:otherwise>
         </c:choose>
     </c:if>
-    ${user.username}
+    <div class="row justify-content-md-center">
+        <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
+                <h2 class="text-center mb-4">Create New User</h2>
+                <p>${error}</p>
+                <form action="/user/create" method="post" autocomplete="off">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="username" style="width: 50px">
+                            <i class="fa fa-user"></i>
+                        </span>
+                            <input type="text" class="form-control py-2" name="username" placeholder="Username"
+                                aria-label="Username" aria-describedby="username" autocomplete="off" value="${username}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="displayName" style="width: 50px">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control py-2" name="displayName" placeholder="Display Name"
+                               aria-label="displayName" aria-describedby="displayName" autocomplete="off" value="${displayName}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="password" style="width: 50px">
+                            <i class="fa fa-key"></i>
+                        </span>
+                            <input type="password" class="form-control py-2" name="password" placeholder="Password"
+                                aria-label="Password" aria-describedby="password" autocomplete="off" value="${password}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="cpassword" style="width: 50px">
+                            <i class="fa fa-key"></i>
+                        </span>
+                        <input type="password" class="form-control py-2" name="cpassword" placeholder="Confirm Password"
+                               aria-label="Password" aria-describedby="cpassword" autocomplete="off" value="${cpassword}">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i>&nbsp; Create New User</button>
+                    </div>
+                </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

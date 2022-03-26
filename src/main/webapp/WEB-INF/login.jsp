@@ -30,7 +30,7 @@
                            aria-label="Password" aria-describedby="password">
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-sign-out"></i>&nbsp; Login</button>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in"></i>&nbsp; Login</button>
                 </div>
             </form>
         </div>
