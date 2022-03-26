@@ -71,7 +71,9 @@
                         <td class="py-2">${user.displayName}</td>
                         <td class="align-middle">
                             <a class="btn btn-warning btn-sm" type="button" href="/user/edit?username=${user.username}">
-                                <i class="fa fa-pencil-square"></i>Edit</a>
+                                <i class="fa fa-pencil-square"></i>Display Name</a>
+                            <a class="btn btn-info btn-sm" type="button" href="/user/password?username=${user.username}">
+                                <i class="fa fa-key"></i>Password</a>
                             <c:if test="${currentUser.username != user.username}">
                                 <!-- Button trigger modal -->
                                 <button class="btn btn-danger btn-sm"

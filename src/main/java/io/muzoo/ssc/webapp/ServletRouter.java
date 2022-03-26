@@ -29,6 +29,7 @@ public class ServletRouter {
         routables.add(DeleteUserServlet.class);
         routables.add(CreateUserServlet.class);
         routables.add(EditUserServlet.class);
+        routables.add(ChangePasswordServlet.class);
     }
 
     private SecurityService securityService;

@@ -18,6 +18,7 @@ public class UserService {
     private static final String SELECT_ALL_USER_SQL = "SELECT * FROM tbl_user;";
     private static final String DELETE_USER_SQL = "DELETE FROM tbl_user WHERE username = ?;";
     private static final String UPDATE_USER_SQL = "UPDATE tbl_user SET display_name = ? WHERE username = ?";
+    private static final String UPDATE_USER_PASSWORD_SQL = "UPDATE tbl_user SET password = ? WHERE username = ?";
 
     private static UserService service;
 
@@ -120,12 +121,19 @@ public class UserService {
     }
 
 
-    /*
-    public void changePassword(String password){
-
+    public void changePassword(String username, String password) throws UserServiceException {
+        try(Connection connection = databaseConnectionService.getConnection();
+            PreparedStatement preparedStmt = connection.prepareStatement(UPDATE_USER_PASSWORD_SQL)){
+            preparedStmt.setString (1, BCrypt.hashpw(password, BCrypt.gensalt()));
+            preparedStmt.setString(2, username);
+            preparedStmt.execute();
+            connection.commit();
+        }
+        catch (SQLException throwables){
+            throw new UserServiceException(throwables.getMessage());
+        }
     }
 
-     */
 
 //    public static void main(String[] args) {
 //        UserService userService = new UserService();
