@@ -32,8 +32,8 @@ public class UserService {
 
     public void createUser(String username, String password, String displayName) throws UserServiceException {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        try(Connection connection = databaseConnectionService.getConnection()){
-            PreparedStatement preparedStmt = connection.prepareStatement(INSERT_USER_SQL);
+        try(Connection connection = databaseConnectionService.getConnection();
+        PreparedStatement preparedStmt = connection.prepareStatement(INSERT_USER_SQL)){
             preparedStmt.setString (1, username);
             preparedStmt.setString (2, hashedPassword);
             preparedStmt.setString (3, displayName);
@@ -50,8 +50,8 @@ public class UserService {
 
 
     public User findByUsername(String username){
-        try(Connection connection = databaseConnectionService.getConnection()){
-            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_USER_SQL);
+        try(Connection connection = databaseConnectionService.getConnection();
+            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_USER_SQL)){
             preparedStmt.setString (1, username);
             ResultSet result = preparedStmt.executeQuery();
             result.next();
@@ -70,8 +70,8 @@ public class UserService {
 
     public List<User> listAllUsers(){
         List<User> userList = new ArrayList<>();
-        try(Connection connection = databaseConnectionService.getConnection()){
-            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_ALL_USER_SQL);
+        try(Connection connection = databaseConnectionService.getConnection();
+            PreparedStatement preparedStmt = connection.prepareStatement(SELECT_ALL_USER_SQL)){
             ResultSet result = preparedStmt.executeQuery();
             while(result.next()){
                 userList.add(new User(
