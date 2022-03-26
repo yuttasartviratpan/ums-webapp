@@ -4,19 +4,14 @@ import io.muzoo.ssc.webapp.config.ConfigProperties;
 import io.muzoo.ssc.webapp.config.ConfigurationLoader;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseConnectionService {
-    String dbDriver = "com.mysql.cj.jdbc.Driver";
-    String dbURL = "jdbc:mysql:// localhost:13306/";
-    String dbName = "login_webapp";
-    String dbUsername = "root";
-    String dbPassword = "securedpassword";
+
+    private static DatabaseConnectionService service;
     private final HikariDataSource ds;
 
-    public DatabaseConnectionService(){
+    private DatabaseConnectionService(){
         ds = new HikariDataSource();
         ConfigProperties configProperties = ConfigurationLoader.load();
         if(configProperties == null){
@@ -31,5 +26,12 @@ public class DatabaseConnectionService {
 
     public Connection getConnection() throws SQLException {
         return ds.getConnection();
+    }
+
+    public static DatabaseConnectionService getInstance(){
+        if(service == null){
+            service = new DatabaseConnectionService();
+        }
+        return service;
     }
 }

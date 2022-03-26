@@ -1,6 +1,8 @@
 package io.muzoo.ssc.webapp.service;
 
 import io.muzoo.ssc.webapp.model.User;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -8,14 +10,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService {
 
     private static final String INSERT_USER_SQL = "INSERT INTO tbl_user(username, password, display_name) VALUES (?, ?, ?);";
     private static final String SELECT_USER_SQL = "SELECT * FROM tbl_user WHERE username = ?;";
     private static final String SELECT_ALL_USER_SQL = "SELECT * FROM tbl_user;";
 
+    private static UserService service;
+
     @Setter
     private DatabaseConnectionService databaseConnectionService;
+
+    public static UserService getInstance(){
+        if(service == null){
+            service = new UserService();
+            service.setDatabaseConnectionService(DatabaseConnectionService.getInstance());
+        }
+        return service;
+    }
 
     public void createUser(String username, String password, String displayName) throws UserServiceException {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -34,6 +47,7 @@ public class UserService {
             throw new UserServiceException(throwables.getMessage());
         }
     }
+
 
     public User findByUsername(String username){
         try(Connection connection = databaseConnectionService.getConnection()){
@@ -75,12 +89,32 @@ public class UserService {
         return userList;
     }
 
-    public static void main(String[] args) {
-        UserService userService = new UserService();
-        userService.setDatabaseConnectionService(new DatabaseConnectionService());
-        List<User> users = userService.listAllUsers();
-        for(User user : users){
-            System.out.println(user.getUsername());
-        }
+    /*
+    public void deleteUserByUsername(){
+
     }
+     */
+
+    /*
+    public void updateUserByUserID(long id, String displayName){
+
+    }
+
+     */
+
+    /*
+    public void changePassword(String password){
+
+    }
+
+     */
+
+//    public static void main(String[] args) {
+//        UserService userService = new UserService();
+//        userService.setDatabaseConnectionService(new DatabaseConnectionService());
+//        List<User> users = userService.listAllUsers();
+//        for(User user : users){
+//            System.out.println(user.getUsername());
+//        }
+//    }
 }
