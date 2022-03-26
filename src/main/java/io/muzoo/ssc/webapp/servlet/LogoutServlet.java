@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ *
+ * @author gigadot
+ */
 public class LogoutServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;

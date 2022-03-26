@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import io.muzoo.ssc.webapp.Routable;
 
+/**
+ *
+ * @author gigadot
+ */
 public class LoginServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;

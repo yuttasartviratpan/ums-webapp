@@ -1,6 +1,7 @@
 package io.muzoo.ssc.webapp.servlet;
 
 import io.muzoo.ssc.webapp.Routable;
+import io.muzoo.ssc.webapp.model.User;
 import io.muzoo.ssc.webapp.service.SecurityService;
 import io.muzoo.ssc.webapp.service.UserService;
 import org.apache.commons.lang.StringUtils;
@@ -16,13 +17,13 @@ import java.io.IOException;
  *
  * @author gigadot
  */
-public class CreateUserServlet extends HttpServlet implements Routable {
+public class EditUserServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
 
     @Override
     public String getMapping() {
-        return "/user/create";
+        return "/user/edit";
     }
 
     @Override
@@ -34,10 +35,16 @@ public class CreateUserServlet extends HttpServlet implements Routable {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if (authorized) {
+            String username = StringUtils.trim(request.getParameter("username"));
+            UserService userService = UserService.getInstance();
 
-
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/create.jsp");
+            User user = userService.findByUsername(username);
+            request.setAttribute("user", user);
+            request.setAttribute("username", user.getUsername());
+            request.setAttribute("displayName", user.getDisplayName());
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/edit.jsp");
             rd.include(request, response);
+
             request.getSession().removeAttribute("hasError");
             request.getSession().removeAttribute("message");
         } else {
@@ -54,13 +61,13 @@ public class CreateUserServlet extends HttpServlet implements Routable {
 
             String username = StringUtils.trim(request.getParameter("username"));
             String displayName = StringUtils.trim(request.getParameter("displayName"));
-            String password = request.getParameter("password");
-            String cpassword = request.getParameter("cpassword");
 
             UserService userService = UserService.getInstance();
+            User user = userService.findByUsername(username);
+
             String errorMessage = null;
-            if(userService.findByUsername(username) != null){
-                errorMessage = "Username has already been taken";
+            if(user == null){
+                errorMessage = "Username does not exist";
             }
             else if(StringUtils.isBlank(username)){
                 errorMessage = "Username cannot be blank";
@@ -68,19 +75,15 @@ public class CreateUserServlet extends HttpServlet implements Routable {
             else if(StringUtils.isBlank(displayName)){
                 errorMessage = "Display name cannot be blank";
             }
-            else if(!StringUtils.equals(password, cpassword)){
-                errorMessage = "Password mismatched";
-            }
-
             if(errorMessage != null){
                 request.getSession().setAttribute("hasError", true);
                 request.getSession().setAttribute("message", errorMessage);
             }
             else{
                 try{
-                    userService.createUser(username, password, displayName);
+                    userService.updateUserByUsername(username, displayName);
                     request.getSession().setAttribute("hasError", false);
-                    request.getSession().setAttribute("message", "User has been created");
+                    request.getSession().setAttribute("message", "User has been updated");
                     response.sendRedirect("/");
                     return;
                 }
@@ -91,10 +94,8 @@ public class CreateUserServlet extends HttpServlet implements Routable {
             }
             request.setAttribute("username", username);
             request.setAttribute("displayName", displayName);
-            request.setAttribute("password", password);
-            request.setAttribute("cpassword", cpassword);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/create.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/edit.jsp");
             rd.include(request, response);
             request.getSession().removeAttribute("hasError");
             request.getSession().removeAttribute("message");
