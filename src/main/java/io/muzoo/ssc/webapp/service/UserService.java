@@ -16,6 +16,7 @@ public class UserService {
     private static final String INSERT_USER_SQL = "INSERT INTO tbl_user(username, password, display_name) VALUES (?, ?, ?);";
     private static final String SELECT_USER_SQL = "SELECT * FROM tbl_user WHERE username = ?;";
     private static final String SELECT_ALL_USER_SQL = "SELECT * FROM tbl_user;";
+    private static final String DELETE_USER_SQL = "DELETE FROM tbl_user WHERE username = ?;";
 
     private static UserService service;
 
@@ -89,11 +90,20 @@ public class UserService {
         return userList;
     }
 
-    /*
-    public void deleteUserByUsername(){
 
+    public boolean deleteUserByUsername(String username){
+        try(Connection connection = databaseConnectionService.getConnection();
+            PreparedStatement preparedStmt = connection.prepareStatement(DELETE_USER_SQL)){
+            preparedStmt.setString (1, username);
+            int deleteCount = preparedStmt.executeUpdate();
+            connection.commit();
+            return deleteCount > 0;
+        }
+        catch (SQLException throwables){
+            return false;
+        }
     }
-     */
+
 
     /*
     public void updateUserByUserID(long id, String displayName){

@@ -10,18 +10,18 @@ import io.muzoo.ssc.webapp.model.User;
 import io.muzoo.ssc.webapp.service.SecurityService;
 import io.muzoo.ssc.webapp.service.UserService;
 
-import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  *
  * @author gigadot
  */
-public class HomeServlet extends HttpServlet implements Routable {
+public class DeleteUserServlet extends HttpServlet implements Routable {
 
 
     private SecurityService securityService;
@@ -29,7 +29,7 @@ public class HomeServlet extends HttpServlet implements Routable {
 
     @Override
     public String getMapping() {
-        return "/index.jsp";
+        return "/user/delete";
     }
 
     @Override
@@ -44,18 +44,28 @@ public class HomeServlet extends HttpServlet implements Routable {
             // do MVC in here
             String username = (String) request.getSession().getAttribute("username");
             UserService userService = UserService.getInstance();
-            User currentUser = userService.findByUsername(username);
 
-            request.setAttribute("currentUser", currentUser);
-            request.setAttribute("users", userService.listAllUsers());
+            try{
+                User currentUser = userService.findByUsername(username);
+                User deletingUser = userService.findByUsername(request.getParameter("username"));
+                if(userService.deleteUserByUsername(deletingUser.getUsername())){
+                    request.getSession().setAttribute("hasError", false);
+                    request.getSession().setAttribute("message", String.format("User %s is successfully deleted"
+                            , deletingUser.getUsername()));
 
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/home.jsp");
-            rd.include(request, response);
-            request.removeAttribute("hasError");
-            request.removeAttribute("message");
+                }
+                else{
+                    request.getSession().setAttribute("hasError", true);
+                    request.getSession().setAttribute("message", String.format("Unable to delete user %s"
+                            , deletingUser.getUsername()));
+                }
+            } catch (Exception e){
+                request.getSession().setAttribute("hasError", true);
+                request.getSession().setAttribute("message", "Something went wrong, operation discarded");
+            }
+
+            response.sendRedirect("/");
         } else {
-            request.removeAttribute("hasError");
-            request.removeAttribute("message");
             response.sendRedirect("/login");
         }
     }
