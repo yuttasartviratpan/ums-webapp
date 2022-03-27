@@ -35,3 +35,4 @@ config.properties
 login-webapp.iml
 !**/tomcat.8082/
 tomcat.8082/
+data.sql
